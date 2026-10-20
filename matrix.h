@@ -151,7 +151,7 @@ class RowEquMatrix : public Matrix{
         //Sorts rows to get closer to echelon form
         void sort(){
             //# of zeros before leading entry in each row
-            int priority[numRows];
+            vector<int> priority = vector<int>(numRows);
             
             for(int r=0; r<numRows; r++){
                 int c=0;
@@ -160,7 +160,7 @@ class RowEquMatrix : public Matrix{
                     if(c == numCols) break;
                 }
                 
-                priority[r] = c;
+                priority.at(r) = c;
                 //cout << "Row " << r << ": " << c << endl;
             }
             
@@ -170,18 +170,18 @@ class RowEquMatrix : public Matrix{
             
             //Add a row to empty matrix
             addRow(copy.getArr().at(0));
-            vector<int> priorities = {priority[0]};
+            vector<int> priorities = {priority.at(0)};
             
             for(int r=1; r<copy.getNumRows(); r++){
                 //Figure out where to insert
                 int i=0;
                 while(i<priorities.size()){
-                    if(priorities.at(i) > priority[r]) break;
+                    if(priorities.at(i) > priority.at(r)) break;
                     i++;
                 }
                 //Insert
                 matrix.insert(matrix.begin()+i, copy.getArr().at(r));
-                priorities.insert(priorities.begin()+i, priority[r]);
+                priorities.insert(priorities.begin()+i, priority.at(r));
                 
                 swap(i, r);
             }
